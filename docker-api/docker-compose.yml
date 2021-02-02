@@ -1,0 +1,19 @@
+version: '2'
+services:
+  docker-api:
+    image: alpine/socat
+    container_name: docker-api
+    restart: always
+    volumes:
+       - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - JAVA_OPTS=-Duser.timezone=Asia/Shanghai
+    dns:
+      - 8.8.8.8
+    ports:
+      - "3375:2375"
+    mem_limit: 256m
+    command: "TCP4-LISTEN:2375,fork,reuseaddr UNIX-CONNECT:/var/run/docker.sock"
+
+
+   
